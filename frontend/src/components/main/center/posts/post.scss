@@ -1,0 +1,97 @@
+.post{
+    border-radius: 0.6rem;
+    background-color: #fff;
+    overflow: hidden;
+    border: 0.4px solid lightgray;
+    padding-inline: 14px;
+    padding-top: 12px;
+    padding-bottom: 7px;
+    margin-top: 10px;
+    
+
+    .post-profile{
+        display: grid;
+        grid-template-columns: max-content 1fr max-content;
+        gap: 10px;
+        overflow: hidden;
+        // border: 1px solid red;
+
+        .profile-img{
+            display: flex;
+            align-items: center;
+            img{
+                height: 45px;
+                aspect-ratio: 1/1;
+                border-radius: 50%;
+                overflow: hidden;
+            }
+        }
+        .profile-content{
+            display: flex;
+            gap: 2px;
+            flex-direction: column;
+            justify-content: space-between;
+            .profile-title{
+                a{
+                    text-decoration: none;
+                    font-size: 16px;
+                    font-weight: 600;
+                    color: black;
+                    &:hover{
+                        text-decoration: underline;
+                        color: blue;
+                    }
+                }
+                span{
+                    font-size: 13px;
+                    color: #00000099;
+                    margin-left: 4px;
+                }
+            }
+            .profile-description{
+                p{
+                    font-size: 12px;
+                    color: rgba(0,0,0,0.6);
+                    font-weight: 400;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    width: 60%;
+                }
+            }
+            .profile-post-time{
+                span{
+                    font-size: 12px;
+                    color: rgba(0,0,0,0.6);
+                    font-weight: 400;
+                    display: flex;
+                    align-items: center;
+                    svg{
+                        font-size: 10px;
+                    }
+                }
+            }
+        }
+
+        .profile-menu{
+            display: flex;
+            align-items: center;
+            button{
+                border: none;
+                outline: none;
+                padding: 7px 5px;
+                color: #0a66c2;
+                font-size: 0.8rem;
+                font-weight: 600;
+                display: flex;
+                align-items: center;
+                background: transparent;
+                cursor: pointer;
+                transition: all 0.1s ease-in-out;
+                &:hover{
+                    background: #97bce1;
+                }
+            }
+        }
+    }
+}
