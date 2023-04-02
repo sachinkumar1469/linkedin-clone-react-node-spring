@@ -9,6 +9,8 @@ import Login from './components/authentication/Login';
 import Signup from './components/authentication/Singup';
 import Network from "./pages/mynetwork/Network";
 import Jobs from "./pages/jobs/Jobs";
+import Message from "./pages/messages/Message";
+import Profile from "./pages/profile/Profile";
 
 function App(props) {
   return (
@@ -21,6 +23,12 @@ function App(props) {
             <Route index element={<Home />} />
             <Route path="mynetwork" element={<Network/>}/>
             <Route path="jobs" element={<Jobs/>}/>
+            <Route path="message" element={<Message/>}>
+              <Route index element={<Message/>}/>
+              <Route path=":id" element={<Message/>}/>
+            </Route>
+            <Route path="notification" element={<Message/>}/>
+            <Route path=":userId" element={<Profile/>}/> 
           </Route>
         </Routes>
       </div>

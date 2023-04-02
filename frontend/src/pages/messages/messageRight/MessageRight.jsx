@@ -1,25 +1,12 @@
 import React from 'react';
 
 // Local imports
-import "./jobsRight.scss";
+import './messageRight.scss';
 
-function JobsRight() {
+function MessageRight() {
   return (
-    <div className='jobs-right-wrapper'>
-      <div className="open-to-work">
-        <h3>Open to work</h3>
-        <p>Recommended based on your activity</p>
-        <a href="">
-            <div>Show recruiters you’re open to new job opportunities</div>
-            <img src="https://media.licdn.com/dms/image/D4D35AQGTUUMFNhlAOg/profile-framedphoto-shrink_200_200/0/1664466760098?e=1680994800&v=beta&t=rZyt8-cDas6ITVSI6yxtaeY_c26pgSeGC2PJZdRUl_o" alt="" />
-        </a>
-        <div>Get more InMails from recruiters when you are #OpenToWork - you control who sees this</div>
-        <h2> 
-          <span>Get Started</span>
-          <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="m11.293 17.293 1.414 1.414L19.414 12l-6.707-6.707-1.414 1.414L15.586 11H6v2h9.586z"></path></svg>
-        </h2>
-      </div>
-      <div className='jobs-image'>
+    <div className='message-right-wrapper'>
+      <div className='linkedin-image'>
         <a href="#">
           <img src="https://media.licdn.com/media/AAYQAgTPAAgAAQAAAAAAADVuOvKzTF-3RD6j-qFPqhubBQ.png" alt="" />
         </a>
@@ -58,4 +45,4 @@ function JobsRight() {
   )
 }
 
-export default JobsRight
+export default MessageRight
