@@ -1,6 +1,6 @@
 
 // Local Imports
-import "./main.scss";
+import "./home.scss";
 import LeftMain from './left/LeftMain';
 import RightMain from './right/RightMain';
 import CenterMain from './center/CenterMain';

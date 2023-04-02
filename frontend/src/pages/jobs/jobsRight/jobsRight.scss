@@ -1,0 +1,60 @@
+.jobs-right-wrapper{
+    .open-to-work{
+        padding-block:1rem;
+        // padding-inline: 1rem;
+        border-radius: 0.6em;
+        background-color: #fff;
+        overflow: hidden;
+        border: 0.4px solid lightgray;
+        h3{
+            padding-inline: 1rem;
+            padding-top: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            font-family: 'Arial Narrow', Arial, sans-serif;
+            color: rgba(0,0,0,0.8);
+        }
+        p{
+            padding-inline: 1rem;
+            font-size: 0.8rem;
+            font-weight: 400;
+            font-family: 'Arial Narrow', Arial, sans-serif;
+            color: rgba(0,0,0,0.8);
+            margin-top: 3px;
+        }
+        a{
+            padding: 1rem;
+            padding-block: 0.7rem;
+            margin-block: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            background-color: #f9fafb;
+            div{
+                flex: 1;
+                font-size: 0.8rem;
+                font-weight: 600;
+                font-family: Arial, sans-serif;
+                color: rgba(0,0,0,0.8);
+                text-decoration: none;
+                line-height: 1rem;
+            }
+            img{
+                width: 55px;
+                height: 55px;
+                border-radius: 50%;
+                overflow: hidden;
+            }   
+        }
+        div{
+            padding-inline: 1rem;
+            gap: 10px;
+            font-size: 0.8rem;
+            font-weight: 400;
+            font-family: 'Arial Narrow', Arial, sans-serif;
+            color: rgba(0,0,0,0.8);
+           
+        }
+    }
+}

@@ -1,0 +1,23 @@
+.jobs{
+    padding-top: 5rem;
+    padding-inline: 4rem;
+    display: flex;
+    gap: 20px;
+    .jobs-left{
+        width: 225px !important;
+        height: max-content;
+    }
+    .jobs-center{
+        flex: 1;
+        
+    }
+    .jobs-right{
+        width: 300px !important;
+        height: max-content;
+        border-radius: 0.6em;
+        background-color: #fff;
+        overflow: hidden;
+        border: 0.4px solid lightgray;
+    }
+    
+}
