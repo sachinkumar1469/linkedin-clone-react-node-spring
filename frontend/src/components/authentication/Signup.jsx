@@ -1,8 +1,54 @@
-import React from 'react';
-import {NavLink} from 'react-router-dom';
+import React, { useState } from 'react';
+import axios from 'axios';
 
-function Login() {
-  return (
+// Local imports
+import "./auth.scss";
+import { NavLink } from 'react-router-dom';
+import { useInputChange, useInputFileChange } from '../../customHooks/HandleInputChange';
+
+function Signup() {
+    // const [inputImage,setInputImage] = useState("https://www.pngall.com/wp-content/uploads/12/Avatar-Profile-PNG-Picture.png");
+    // const [coverImage,setCoverImage] = useState("https://media.licdn.com/dms/image/D4D16AQHUzxp0Neczlg/profile-displaybackgroundimage-shrink_200_800/0/1664904205614?e=1685577600&v=beta&t=vemILaUrvTblbxxVClnHzWyXi09_oQ0HX4LjO9Yc7Tc");
+    
+    const [name,onNameChange] = useInputChange("");
+    const [username,onUsernameChange] = useInputChange("");
+    const [email,onEmailChange] = useInputChange("");
+    const [phone,onPhoneChange] = useInputChange("");
+    const [password,onPasswordChange] = useInputChange("");
+    const [confirmPassword,onConfirmPasswordChange] = useInputChange("");
+    const [description,onDescriptionChange] = useInputChange("");
+    const [profileImg,onProfileImgChange,profileImgPreview] = useInputFileChange("https://www.pngall.com/wp-content/uploads/12/Avatar-Profile-PNG-Picture.png");
+    const [coverImg,onCoverImgChange,coverImgPreview] = useInputFileChange("https://media.licdn.com/dms/image/D4D16AQHUzxp0Neczlg/profile-displaybackgroundimage-shrink_200_800/0/1664904205614?e=1685577600&v=beta&t=vemILaUrvTblbxxVClnHzWyXi09_oQ0HX4LjO9Yc7Tc");
+    
+    const onFormSubmit = (e) => {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append("name",name);
+        formData.append("username",username);
+        formData.append("email",email);
+        formData.append("phone",phone);
+        formData.append("password",password);
+        formData.append("coverImg",coverImg);
+        formData.append("profileImg",profileImg);
+        formData.append("description",description);
+      
+        axios.post(process.env.REACT_APP_API_URL+'/signup',formData,{
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        })
+        .then(response => {
+          console.log(response.data);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+        
+        console.log(name,username,email,phone,password,confirmPassword,description,profileImg,coverImg);
+      }
+      
+
+    return (
     <div className='auth'>
       <div className='auth-header'>
         <svg xmlns="http://www.w3.org/2000/svg"  width="200px" height="150px" viewBox="0 -192 512 512" >
@@ -16,19 +62,54 @@ function Login() {
       <div className='auth-heading'><p>Make the most of your professional life</p></div>
       <div className='auth-form'>
         <form>
-            {/* <p className='error-msg'>Password Mismatch</p> */}
-            <div className='login-form-input'>
-                <input type='text' placeholder='Email' />
-                <input type='password' placeholder='Password' />
+            <div className='auth-form-img'>
+                <div className='auth-profile-img'>
+                    <img src={`${profileImgPreview}`} alt="" />
+                </div>
+                <div className='auth-cover-img' style={{backgroundImage:`url(${coverImgPreview})`}}></div>
             </div>
-            
+            {/* <p className='error-msg'>Password Mismatch</p> */}
+            <div className='auth-form-input'>
+                <input type='text' placeholder='Name' name='name' 
+                value={name} onChange={onNameChange} />
+                <input type='text' placeholder='Username' name='username'
+                value={username} onChange={onUsernameChange} />
+            </div>
+            <div className='auth-form-input'>
+                <input type='text' placeholder='Email' name='email' 
+                value={email} onChange={onEmailChange}/>
+                <input type='text' placeholder='Phone Number' name='phone'
+                value={phone} onChange={onPhoneChange} />
+            </div>
+            <div className='auth-form-input'>
+                <input type='text' placeholder='Password' 
+                value={password} onChange={onPasswordChange}/>
+                <input type='text' placeholder='Confirm Password' 
+                value={confirmPassword} onChange={onConfirmPasswordChange}/>
+            </div>
+            <div className='auth-textarea'>
+                <textarea id="" cols="30" rows="10" placeholder='Description' name="description"
+                value={description} onChange={onDescriptionChange}></textarea>
+            </div>
+            <div className='auth-image-input'>
+                <label htmlFor="image">
+                    <p>Choose profile picture!</p>
+                </label>
+                <input type="file" name="image" id="image" accept='.jpg,.png,.jpeg' 
+                onChange={onProfileImgChange}  />
+                <label htmlFor="cover-image">
+                    <p>Choose cover image!</p>
+                </label>
+                <input type="file" name="cover-image" id="cover-image" accept='.jpg,.png,.jpeg' 
+                onChange={onCoverImgChange} />
+            </div>
             <div className='auth-links'>
                 <a href="#">Forgot password?</a>
-                <NavLink to={"/signup"}>Create new account!</NavLink>
+                <NavLink to={"/signin"}>Already have an account?</NavLink>
             </div>
 
             <div className='auth-form-btn'>
-                <button type='submit'>Sign Up</button>
+                <button type='button' onClick={onFormSubmit}>Sign Up</button>
             </div>
 
         </form>
@@ -37,4 +118,4 @@ function Login() {
   )
 }
 
-export default Login
+export default Signup

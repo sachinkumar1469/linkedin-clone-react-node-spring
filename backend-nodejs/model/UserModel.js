@@ -10,6 +10,10 @@ const userSchema = new Schema({
         type:String,
         required:true
     },
+    phone:{
+        type:String,
+        required:true
+    },
     password:{
         type:String,
         required:true
@@ -18,11 +22,11 @@ const userSchema = new Schema({
         type:String,
         required:true
     },
-    profilePic:{
+    profileImg:{
         type:String,
         required:true
     },
-    coverPic:{
+    coverImg:{
         type:String,
         default:""
     },

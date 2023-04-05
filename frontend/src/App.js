@@ -6,7 +6,7 @@ import './app.scss';
 import Header from "./components/header/Header";
 import Home from "./pages/home/Home";
 import Login from './components/authentication/Login';
-import Signup from './components/authentication/Singup';
+import Signup from './components/authentication/Signup';
 import Network from "./pages/mynetwork/Network";
 import Jobs from "./pages/jobs/Jobs";
 import Message from "./pages/messages/Message";
@@ -17,7 +17,7 @@ function App(props) {
     <BrowserRouter>
       <div className="app">
         <Routes>
-          <Route path="/login" element={<Login />} />
+          <Route path="/signin" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/" element={<Header />}>
             <Route index element={<Home />} />

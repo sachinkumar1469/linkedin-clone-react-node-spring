@@ -3,6 +3,10 @@ const path = require("path");
 // Libraries import
 const express = require("express");
 const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+
+// Local imports
+const routes = require("./routes");
 
 
 // MongoDB Atlas DB Connection
@@ -17,15 +21,35 @@ mongoose.connect('mongodb+srv://sachinyadav1469:Sachin%40123@cluster0.my3twen.mo
 // Initializing express
 const app = express();
 
+// Allow cross origin requests
+app.use(function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', "*");
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH');
+    res.header('Access-Control-Allow-Headers', 'Content-Type,Origin,X-Requested-With,Accept,Authorization');
+    next();
+})
+
+
 // Static file path
 app.use(express.static(path.join(__dirname,"public")));
 
-// Parse the json body data
-app.use(express.json());
 
-app.use("/",(req,res)=>{
-    res.send("Hello");
-})
+// Parse the urlencoded body data
+app.use(bodyParser.urlencoded({extended:false}));
+
+// Parse the json body data
+app.use(bodyParser.json());
+
+// Routes
+app.use("/api",routes);
+
+// File upload error handler
+app.use((error,req,res,next)=>{
+    if(error){
+        return res.status(422).json({errors:[{msg:error.message}]});
+    }
+});
+    
 
 // Server is listening on port 5001
 app.listen(5001);
