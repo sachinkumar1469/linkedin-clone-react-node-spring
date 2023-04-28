@@ -1,4 +1,5 @@
 const path = require("path");
+const fs = require("fs");
 
 // Libraries import
 const express = require("express");
@@ -33,6 +34,9 @@ app.use(function(req, res, next) {
 // Static file path
 app.use(express.static(path.join(__dirname,"public")));
 
+// Image upload path
+app.use("/uploads",express.static(path.join(__dirname,"uploads")));
+
 
 // Parse the urlencoded body data
 app.use(bodyParser.urlencoded({extended:false}));
@@ -43,10 +47,34 @@ app.use(bodyParser.json());
 // Routes
 app.use("/api",routes);
 
-// File upload error handler
+// General Error Handler
 app.use((error,req,res,next)=>{
     if(error){
-        return res.status(422).json({errors:[{msg:error.message}]});
+        let errorCode = error.code || 422;
+        if(isNaN(errorCode)){
+            errorCode = 422;
+        }
+        res.status(errorCode).json({
+            "status":"error",
+            "message":error.message,
+            "data":null
+        });
+        const filePath = error.filesPath;
+        if(filePath){
+            filePath.forEach(file=>{
+                if(file == path.join("uploads","userImages","defaultProfile.png") || file == path.join("uploads","userImages","defaultCover.png")){
+                    console.log("Default image");
+                    return;
+                }
+                fs.unlink(path.join(__dirname,file),err=>{
+                    if(err){
+                        console.log("Unable to delete file");
+                    }else{
+                        console.log("File deleted");
+                    }
+                });
+            });
+        }
     }
 });
     
