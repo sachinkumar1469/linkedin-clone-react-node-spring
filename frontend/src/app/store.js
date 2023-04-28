@@ -1,24 +1,22 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-export const store = configureStore({
-  reducer: {
-    counter: counterReducer,
-    extra:extraReducer
-  },
+// Local imports
+import { authReducer } from './reducers/authReducer';
+import { authMiddleware } from './middlewares/authMiddleware';
+
+const rootReducer = {
+  auth: authReducer,
+};
+
+const middleware = [authMiddleware];
+
+const store = configureStore({
+  reducer: rootReducer,
+  middleware,
 });
 
-function counterReducer(state = {value : 0},action){
-  console.log("Conter reducer called. Value of state is:",state);
-  if(action.type == "increase"){
-    return {...state,value:state.value+1}
-  }
-  return state;
-}
+export { store };
 
-function extraReducer(state={value:1},action){
-  console.log("Extra reducer called. Value of state is:",state);
-  if(action.type == "increase"){
-    return {...state,value:state.value + 1}
-  }
-  return state;
-}
+
+
+

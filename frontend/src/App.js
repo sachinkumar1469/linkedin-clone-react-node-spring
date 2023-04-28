@@ -1,4 +1,3 @@
-import {connect} from "react-redux";
 import {BrowserRouter,Routes,Route} from "react-router-dom";
 
 // Local imports
@@ -36,12 +35,13 @@ function App(props) {
   );
 }
 
-const mapStateToProp = (state)=>{
-  return {state};
-};
+// const mapStateToProp = (state)=>{
+//   return {state};
+// };
 
-const mapDispatchToProp = (dispatch)=>{
-  return {dispatch};
-}
+// const mapDispatchToProp = (dispatch)=>{
+//   return {dispatch};
+// }
 
-export default connect(mapStateToProp,mapDispatchToProp)(App);
+// export default connect(mapStateToProp,mapDispatchToProp)(App);
+export default App;

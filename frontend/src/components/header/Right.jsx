@@ -37,7 +37,7 @@ function Right() {
             <span>Notification</span>
         </a>
         <a className="home-icon icon-wrapper">
-            <img src="https://media.licdn.com/dms/image/D4D03AQEmbh1gFpe_-A/profile-displayphoto-shrink_100_100/0/1679740824687?e=1685577600&amp;v=beta&amp;t=ynKaf-P_znPjyt3lHjZ95W9uuXsbhSc1uXEE4s5A4ng" alt="Sachin Kumar"/>
+            <img src="https://media.licdn.com/dms/image/D4D03AQF0s9H7q1LH1w/profile-displayphoto-shrink_100_100/0/1681717892314?e=1687996800&v=beta&t=81fRXGy_1w5BmpGopld78bZOiPx2WKD6s_Ss2Vbmuus" alt="Sachin Kumar"/>
             <span>Me 
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" data-supported-dps="16x16" fill="currentColor" className="mercado-match" width="16" height="16" focusable="false">
                     <path d="M8 11L3 6h10z" ></path>

@@ -13,11 +13,11 @@ const fileUpload = multer({
     },
     storage: multer.diskStorage({
         destination: (req, file, cb) => {
-            console.log("File in destination: ",file);
+            // console.log("File in destination: ",file);
             cb(null, "uploads/userImages");
         },
         filename: (req, file, cb) => {
-            console.log("File in filename: ",file)
+            // console.log("File in filename: ",file)
             const ext = MIMETYPE[file.mimetype];
             cb(null, Date.now() + "." + ext);
         }

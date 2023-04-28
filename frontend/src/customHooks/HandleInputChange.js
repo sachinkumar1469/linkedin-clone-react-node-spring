@@ -16,6 +16,7 @@ const useInputFileChange = (defaultPreviewValue) => {
 
     const handleChange = (event) => {
         setValue(event.target.files[0]);
+        if(event.target.files[0] === undefined) return setPreviewValue(defaultPreviewValue);
         setPreviewValue(URL.createObjectURL(event.target.files[0]));
     };
 

@@ -1,15 +1,25 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 // Local imports
 import "./auth.scss";
 import { NavLink } from 'react-router-dom';
 import { useInputChange, useInputFileChange } from '../../customHooks/HandleInputChange';
+import { LOGIN_SUCCESS } from '../../app/actions/authActions';
 
 function Signup() {
-    // const [inputImage,setInputImage] = useState("https://www.pngall.com/wp-content/uploads/12/Avatar-Profile-PNG-Picture.png");
-    // const [coverImage,setCoverImage] = useState("https://media.licdn.com/dms/image/D4D16AQHUzxp0Neczlg/profile-displaybackgroundimage-shrink_200_800/0/1664904205614?e=1685577600&v=beta&t=vemILaUrvTblbxxVClnHzWyXi09_oQ0HX4LjO9Yc7Tc");
-    
+    // Navigation
+    const navigate = useNavigate();
+
+    // Error handling
+    const [error,setError] = useState("");  
+
+    // Redux Dispatch
+    const dispatch = useDispatch();
+
+    // Custom hooks
     const [name,onNameChange] = useInputChange("");
     const [username,onUsernameChange] = useInputChange("");
     const [email,onEmailChange] = useInputChange("");
@@ -17,8 +27,8 @@ function Signup() {
     const [password,onPasswordChange] = useInputChange("");
     const [confirmPassword,onConfirmPasswordChange] = useInputChange("");
     const [description,onDescriptionChange] = useInputChange("");
-    const [profileImg,onProfileImgChange,profileImgPreview] = useInputFileChange("https://www.pngall.com/wp-content/uploads/12/Avatar-Profile-PNG-Picture.png");
-    const [coverImg,onCoverImgChange,coverImgPreview] = useInputFileChange("https://media.licdn.com/dms/image/D4D16AQHUzxp0Neczlg/profile-displaybackgroundimage-shrink_200_800/0/1664904205614?e=1685577600&v=beta&t=vemILaUrvTblbxxVClnHzWyXi09_oQ0HX4LjO9Yc7Tc");
+    const [profileImg,onProfileImgChange,profileImgPreview] = useInputFileChange(process.env.REACT_APP_API_URL+"uploads/userImages/defaultProfile.png");
+    const [coverImg,onCoverImgChange,coverImgPreview] = useInputFileChange(process.env.REACT_APP_API_URL+"uploads/userImages/defaultCover.png");
     
     const onFormSubmit = (e) => {
         e.preventDefault();
@@ -32,16 +42,19 @@ function Signup() {
         formData.append("profileImg",profileImg);
         formData.append("description",description);
       
-        axios.post(process.env.REACT_APP_API_URL+'/signup',formData,{
+        axios.post(process.env.REACT_APP_API_URL+'api/signup',formData,{
           headers: {
             'Content-Type': 'multipart/form-data'
           }
         })
         .then(response => {
           console.log(response.data);
+          dispatch({type:LOGIN_SUCCESS,payload:response.data.data});
+          navigate('/');
         })
         .catch(error => {
           console.log(error);
+          setError(error.response.data.message);
         });
         
         console.log(name,username,email,phone,password,confirmPassword,description,profileImg,coverImg);
@@ -68,7 +81,7 @@ function Signup() {
                 </div>
                 <div className='auth-cover-img' style={{backgroundImage:`url(${coverImgPreview})`}}></div>
             </div>
-            {/* <p className='error-msg'>Password Mismatch</p> */}
+            {error.length>0 && <p className='error-msg'>{error}</p>}
             <div className='auth-form-input'>
                 <input type='text' placeholder='Name' name='name' 
                 value={name} onChange={onNameChange} />

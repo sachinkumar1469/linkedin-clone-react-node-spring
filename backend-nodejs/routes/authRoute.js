@@ -39,6 +39,8 @@ router.post("/signup",
     // signupValidation,
     (req,res,next)=>{
         const errors = validationResult(req);
+        console.log(req.files,"req.files");
+        console.log(req.file,"req.file");
         if(!errors.isEmpty()){
             return res.status(422).json({errors:errors.array()});
         }
