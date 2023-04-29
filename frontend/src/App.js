@@ -1,4 +1,4 @@
-import {BrowserRouter,Routes,Route} from "react-router-dom";
+import {BrowserRouter,Routes,Route, useNavigate} from "react-router-dom";
 
 // Local imports
 import './app.scss';
@@ -11,14 +11,39 @@ import Jobs from "./pages/jobs/Jobs";
 import Message from "./pages/messages/Message";
 import Profile from "./pages/profile/Profile";
 
+import { checkLocalStorage } from "./app/actions/checkLocalStorage";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+
 function App(props) {
+  // Redux Dispatch
+  const dispatch = useDispatch();
+  // Check if user is logged in
+  const isAuthenticated = useSelector(state=>state.auth.isAuthenticated);
+
+  useEffect(()=>{
+    dispatch(checkLocalStorage());
+  },[dispatch]);
+
+  const navigate = useNavigate();
+  useEffect(()=>{
+    console.log("Value of isAuthenticated is:",isAuthenticated);
+    if(!isAuthenticated){
+      navigate('/signin');
+    } else {
+      navigate('/');
+    }
+
+  },[isAuthenticated])
   return (
-    <BrowserRouter>
+    
       <div className="app">
         <Routes>
-          <Route path="/signin" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/" element={<Header />}>
+          {!isAuthenticated && <>
+            <Route path="/signin" element={<Login />} />
+            <Route path="/signup" element={<Signup />} /> 
+          </>}
+          {isAuthenticated && <Route path="/" element={<Header />}>
             <Route index element={<Home />} />
             <Route path="mynetwork" element={<Network/>}/>
             <Route path="jobs" element={<Jobs/>}/>
@@ -28,10 +53,10 @@ function App(props) {
             </Route>
             <Route path="notification" element={<Message/>}/>
             <Route path=":userId" element={<Profile/>}/> 
-          </Route>
+          </Route>}
         </Routes>
       </div>
-    </BrowserRouter>
+    
   );
 }
 

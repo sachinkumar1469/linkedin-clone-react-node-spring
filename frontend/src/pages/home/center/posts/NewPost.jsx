@@ -1,12 +1,79 @@
-import React from 'react'
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+
+// Local imports
+import Modal from '../../../../components/modal/Modal';
+import './newPost.scss';
 
 function NewPost() {
+
+  // useSelector
+  const user = useSelector(state => state.auth.user);
+  console.log("user in new post",user);
+  // Handle new post modal
+  const [showModal, setShowModal] = useState(false);
+  const handleShowModal = (e) => {
+    e.preventDefault();
+    setShowModal(true);
+  }
+  const handleCloseModal = () => {
+    setShowModal(false);
+  }
+
   return (
     <div className='new-post'>
       <div className="new-post-top">
         <div className="img-top"><img src="https://media.licdn.com/dms/image/D4D03AQF0s9H7q1LH1w/profile-displayphoto-shrink_100_100/0/1681717892314?e=1687996800&v=beta&t=81fRXGy_1w5BmpGopld78bZOiPx2WKD6s_Ss2Vbmuus" alt="" /></div>
         <div className="input-top">
-            <input type="text" placeholder='Start a post' />
+            <input type="text" placeholder='Start a post' onClick={handleShowModal} />
+            {showModal && <Modal onClose={handleCloseModal}>
+              <div className='new-post-wrapper'>
+                <div className="new-post-header">
+                  <div className='post-modal-img'>
+                    <img src={process.env.REACT_APP_API_URL+user?.profileImg} alt={user?.name} />
+                  </div>
+                  <div className='post-model-user'>
+                    <h3>{user?.name}</h3>
+                    <p>Post to anyone</p>
+                  </div>
+                </div>
+                <div className="new-post-body">
+                  <textarea placeholder='What do you want to talk about?' />
+                </div>
+                <div className="new-post-footer">
+                  <div className="new-post-footer-left">
+                    <button>
+                      <svg style={{color:'#378fe9'}} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor"  width="24" height="24" focusable="false">
+                        <path d="M19 4H5a3 3 0 00-3 3v10a3 3 0 003 3h14a3 3 0 003-3V7a3 3 0 00-3-3zm1 13a1 1 0 01-.29.71L16 14l-2 2-6-6-4 4V7a1 1 0 011-1h14a1 1 0 011 1zm-2-7a2 2 0 11-2-2 2 2 0 012 2z"></path>
+                      </svg>
+                      <span>Photo</span>
+                    </button>
+                    <button>
+                      <svg style={{color:'#5f9b41'}} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor" width="24" height="24" focusable="false">
+                        <path d="M19 4H5a3 3 0 00-3 3v10a3 3 0 003 3h14a3 3 0 003-3V7a3 3 0 00-3-3zm-9 12V8l6 4z"></path>
+                      </svg>
+                      <span>Video</span>
+                    </button>
+                    <button>
+                      <svg style={{color:'#e7a33e'}} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor" width="24" height="24" focusable="false">
+                        <path d="M19 4H5a3 3 0 00-3 3v10a3 3 0 003 3h4.31l-.65 3.27a.5.5 0 00.61.61L12 19.38l2.73 1.5a.5.5 0 00.61-.61L14.69 20H19a3 3 0 003-3V7a3 3 0 00-3-3zm1 13a1 1 0 01-.29.71L16 14l-2 2-6-6-4 4V7a1 1 0 011-1h14a1 1 0 011 1z"></path>
+                      </svg>
+                      <span>Event</span>
+                    </button>
+                    <button>
+                      <svg style={{color:'#df3b3b'}} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor" width="24" height="24" focusable="false">
+                        <path d="M19 4H5a3 3 0 00-3 3v10a3 3 0 003 3h4.31l-.65 3.27a.5.5 0 00.61.61L12 19.38l2.73 1.5a.5.5 0 00.61-.61L14.69 20H19a3 3 0 003-3V7a3 3 0 00-3-3zm1 13a1 1 0 01-.29.71L16 14l-2 2-6-6-4 4V7a1 1 0 011-1h14a1 1 0 011 1z"></path>
+                      </svg>
+                      <span>Write article</span>
+                    </button>
+                  </div>
+                  <div className="new-post-footer-right">
+                    <button onClick={handleCloseModal}>Cancel</button>
+                    <button>Post</button>
+                  </div>
+                </div>
+              </div>
+            </Modal>}
         </div>
       </div>
       <div className="new-post-bottom">
