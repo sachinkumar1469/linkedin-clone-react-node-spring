@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import axios from 'axios';
 
 // Local imports
 import Modal from '../../../../components/modal/Modal';
 import './newPost.scss';
+import {useInputFileChange,useInputChange} from "../../../../customHooks/HandleInputChange";
 
 function NewPost() {
 
@@ -20,6 +22,34 @@ function NewPost() {
     setShowModal(false);
   }
 
+  // Handle new post
+  const [post, handlePostChange] = useInputChange("");
+  const [image, handleImageChange, previewImg] = useInputFileChange("");
+
+  // Find the hashtag in the post
+  const findHashtag = (post) => {
+    const regex = /#[a-zA-Z0-9]+/g;
+    const hashtags = post.match(regex);
+    return hashtags || [];
+  }
+  
+  const handleNewPost = (e) => {
+    e.preventDefault();
+    const hashtags = findHashtag(post);
+    const formData = new FormData();
+    formData.append("content", post);
+    formData.append("image", image);
+    formData.append("hashtags", hashtags);
+    axios.post(process.env.REACT_APP_API_URL+"api/post/create", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }).then(res=>{
+      console.log("res",res);
+    }).catch(err=>{
+      console.log("err",err);
+    });
+  }
   return (
     <div className='new-post'>
       <div className="new-post-top">
@@ -38,16 +68,17 @@ function NewPost() {
                   </div>
                 </div>
                 <div className="new-post-body">
-                  <textarea placeholder='What do you want to talk about?' />
+                  <textarea onChange={handlePostChange} placeholder='What do you want to talk about?' name='post' />
+                  <input onChange={handleImageChange} type="file" id="image" name="image" />
                 </div>
                 <div className="new-post-footer">
                   <div className="new-post-footer-left">
-                    <button>
+                    <label htmlFor='image'>
                       <svg style={{color:'#378fe9'}} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor"  width="24" height="24" focusable="false">
                         <path d="M19 4H5a3 3 0 00-3 3v10a3 3 0 003 3h14a3 3 0 003-3V7a3 3 0 00-3-3zm1 13a1 1 0 01-.29.71L16 14l-2 2-6-6-4 4V7a1 1 0 011-1h14a1 1 0 011 1zm-2-7a2 2 0 11-2-2 2 2 0 012 2z"></path>
                       </svg>
                       <span>Photo</span>
-                    </button>
+                    </label>
                     <button>
                       <svg style={{color:'#5f9b41'}} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor" width="24" height="24" focusable="false">
                         <path d="M19 4H5a3 3 0 00-3 3v10a3 3 0 003 3h14a3 3 0 003-3V7a3 3 0 00-3-3zm-9 12V8l6 4z"></path>
@@ -69,7 +100,7 @@ function NewPost() {
                   </div>
                   <div className="new-post-footer-right">
                     <button onClick={handleCloseModal}>Cancel</button>
-                    <button>Post</button>
+                    <button onClick={handleNewPost}>Post</button>
                   </div>
                 </div>
               </div>
