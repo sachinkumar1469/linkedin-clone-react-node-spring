@@ -10,11 +10,11 @@ const postSchema = new Schema({
         type:String,
         default:"",
     },
-    avatar:{
-        type:String,
-    },
     hashtags:{
         type:[String],
+    },
+    image:{
+        type:String,
     },
     likes:[
         {
