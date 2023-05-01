@@ -6,5 +6,5 @@ const postRoute = require("./postRoute");
 
 router.use(authRoute);
 router.use("/post",postRoute);
-
+router.use("/connection",require("./connectionRoute"));
 module.exports = router;

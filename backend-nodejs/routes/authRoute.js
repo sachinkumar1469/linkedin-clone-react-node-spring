@@ -43,18 +43,23 @@ router.post("/signup",
     signupValidation,
     (req,res,next)=>{
         console.log("Signup route");
-        console.log(req.header("Authorization"))
+        // console.log(req.header("Authorization"))
         // Validation Result
+        console.log(req.file,req.body);
         const errors = validationResult(req);
         // Check for file upload. If file is not uploaded then use default image
         // And if there is any error in validation then delete files from uploads folder and send error response
-        const profileImg = req.files["profileImg"] === undefined ? path.join("uploads","userImages","defaultProfile.png") : req.files["profileImg"][0].path;
-        const coverImg = req.files["coverImg"] === undefined ? path.join("uploads","userImages","defaultCover.png") : req.files["coverImg"][0].path;
+        const profileImg =  req.files === undefined ||req.files["profileImg"] === undefined ? path.join("uploads","userImages","defaultProfile.png") : req.files["profileImg"][0].path;
+        const coverImg = req.files === undefined || req.files["coverImg"] === undefined ? path.join("uploads","userImages","defaultCover.png") : req.files["coverImg"][0].path;
         if(!errors.isEmpty()){
             const httpError = new HttpError(errors.array()[0].msg,422,[profileImg,coverImg]);
             return next(httpError);
         }
-        const {name,username,email,phone,password,description} = req.body;
+        let {name,username,email,phone,password,description} = req.body;
+        // Make first char of name capital
+        name = name.split(" ").map((word)=>{
+            return word[0].toUpperCase() + word.slice(1);
+        }).join(" ");
         // If there is no error create a new document in db and then send success response
         User.create(
             {name,username,email,phone,password,description,profileImg,coverImg}
