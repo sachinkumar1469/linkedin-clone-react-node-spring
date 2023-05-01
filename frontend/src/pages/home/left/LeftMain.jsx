@@ -1,21 +1,24 @@
 import React from 'react';
 import "./leftMain.scss";
+import { useSelector } from 'react-redux';
 
 function LeftMain() {
+  // Get the auth user from redux state
+  const authUser = useSelector(state => state.auth.user);
   return (
     <div>
-      <div className='left-main'>
+      {authUser && <div className='left-main'>
         <div className='background-cover'>
           <div style={{backgroundImage:"linear-gradient(rgb(48 47 47 / 50%), rgb(0 0 0 / 0%)),url('https://media.licdn.com/dms/image/D4D16AQHUzxp0Neczlg/profile-displaybackgroundimage-shrink_200_800/0/1664904205614?e=1685577600&v=beta&t=vemILaUrvTblbxxVClnHzWyXi09_oQ0HX4LjO9Yc7Tc')"}}></div>
         </div>
         <div className='profile-link'>
           <a href="#">
-            <img src="https://media.licdn.com/dms/image/D4D03AQF0s9H7q1LH1w/profile-displayphoto-shrink_100_100/0/1681717892314?e=1687996800&v=beta&t=81fRXGy_1w5BmpGopld78bZOiPx2WKD6s_Ss2Vbmuus" alt="" />
-            <span>Sachin Kumar</span>
+            <img src={process.env.REACT_APP_API_URL + authUser.profileImg} alt="" />
+            <span>{authUser.name}</span>
           </a>
         </div>
         <div className="description">
-          <p>MERN || MEAN || Java(Spring & SpringBoot) || Intern at @Coding Ninjas</p>
+          <p>{authUser.description}</p>
         </div>
         <div className="profile-stats">
           <a href='#' className='profile-views'><span>Who's viewed your profile</span><span className='stats-count'>28</span></a>
@@ -39,7 +42,7 @@ function LeftMain() {
             </span>
           </a>
         </div>
-      </div>
+      </div>}
       <br/>
       <div className='left-main left-main-2'>
         <p className='recent'>Recent</p>

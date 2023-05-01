@@ -1,21 +1,22 @@
 import React from 'react'
 import "./post.scss";
 
-function Post() {
+function Post({post}) {
+  
   return (
     <div className='post'>
       <div className="post-profile">
         
         <div className="profile-img">
-            <img src="https://media.licdn.com/dms/image/C560BAQHTvZwCx4p2Qg/company-logo_100_100/0/1612205615891?e=1688601600&v=beta&t=efv4xvpx8Vs0tv6pXQLn5biOQKrf1ZQ14-GS10Knha8" alt="" />
+            <img src={process.env.REACT_APP_API_URL+post.user.profileImg} alt="" />
         </div>
         <div className="profile-content">
             <div className="profile-title">
-                <a href='#' className='profile-name'>Amazon</a>
+                <a href='#' className='profile-name'>{post.user.name}</a>
                 <span className='profile-follow-status'>• Following</span>
             </div>
             <div className="profile-description">
-                <p>We are back with the Season 3 of Propel Accelerator, an initiative by AmazonGlobalSelling!</p>
+                <p>{post.user.description}</p>
             </div>
             <div className="profile-post-time">
                 <span>
@@ -34,16 +35,12 @@ function Post() {
       </div>
       <div className='post-text-content'> 
         <p>
-        💡JavaScript Tip💡
-          <br/><br></br>
-          Use 𝘄𝗶𝗻𝗱𝗼𝘄.𝗵𝗶𝘀𝘁𝗼𝗿𝘆.𝗽𝘂𝘀𝗵𝗦𝘁𝗮𝘁𝗲 and 𝘄𝗶𝗻𝗱𝗼𝘄.𝗵𝗶𝘀𝘁𝗼𝗿𝘆.𝗿𝗲𝗽𝗹𝗮𝗰𝗲𝗦𝘁𝗮𝘁𝗲 methods to easily manipulate the browser history without refreshing the page.
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cum nostrum ipsam praesentium eveniet! Minus incidunt maiores veniam asperiores, non minima saepe sint voluptates officia culpa consectetur exercitationem quam. Officia, optio.
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt, voluptatibus.
+          {post.text}
         </p>
         <button>...see more</button>
       </div>
       <div className="post-images">
-        <img src="https://media.licdn.com/dms/image/D4E22AQHDtw1Y1r2htQ/feedshare-shrink_800/0/1680295629304?e=1683158400&v=beta&t=GAV4pchHO32piMfMWKNSRWu5sFWLEMQYvUOs_5q32JQ" alt="" />
+        {post.image && <img src={process.env.REACT_APP_API_URL+post.image} alt="" />}
       </div>
       <div className="post-interaction">
         <div className="post-interaction-left">

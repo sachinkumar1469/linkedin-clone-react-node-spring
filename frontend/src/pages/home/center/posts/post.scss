@@ -108,9 +108,9 @@
 
     .post-text-content{
         min-height: max-content;
-        max-height: 88px;
+        // max-height: 88px;
         // border: 1px solid red;
-        margin-top: 10px;
+        margin-block: 10px;
         position: relative;
         overflow: hidden;
         p{

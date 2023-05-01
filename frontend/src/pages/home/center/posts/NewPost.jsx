@@ -7,11 +7,11 @@ import Modal from '../../../../components/modal/Modal';
 import './newPost.scss';
 import {useInputFileChange,useInputChange} from "../../../../customHooks/HandleInputChange";
 
-function NewPost() {
+function NewPost({user,setAllPosts}) {
 
   // useSelector
-  const user = useSelector(state => state.auth.user);
-  console.log("user in new post",user);
+  // const user = useSelector(state => state.auth.user);
+  // console.log("user in new post",user);
   // Handle new post modal
   const [showModal, setShowModal] = useState(false);
   const handleShowModal = (e) => {
@@ -45,17 +45,27 @@ function NewPost() {
         "Content-Type": "multipart/form-data",
       },
     }).then(res=>{
-      console.log("res",res);
+      // console.log("res",res.data);
+      // Add the new post to the posts array
+      // console.log(res.data.post);
+      setAllPosts((prevPosts)=>{return [res.data.post, ...prevPosts]});
+      // Clear post and image input state
+      handlePostChange({target:{value:""}}); // Clear post input
+      handleImageChange({target:{files:[]}}); // Clear image input
+      // Close the modal
+      handleCloseModal();
     }).catch(err=>{
       console.log("err",err);
+      // Close the modal
+      handleCloseModal();
     });
   }
   return (
     <div className='new-post'>
       <div className="new-post-top">
-        <div className="img-top"><img src="https://media.licdn.com/dms/image/D4D03AQF0s9H7q1LH1w/profile-displayphoto-shrink_100_100/0/1681717892314?e=1687996800&v=beta&t=81fRXGy_1w5BmpGopld78bZOiPx2WKD6s_Ss2Vbmuus" alt="" /></div>
+        <div className="img-top"><img src={process.env.REACT_APP_API_URL+user?.profileImg} alt="" /></div>
         <div className="input-top">
-            <input type="text" placeholder='Start a post' onClick={handleShowModal} />
+            <div className='input' type="text" placeholder='Start a post' onClick={handleShowModal}>Start a post</div>
             {showModal && <Modal onClose={handleCloseModal}>
               <div className='new-post-wrapper'>
                 <div className="new-post-header">

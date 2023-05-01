@@ -10,6 +10,8 @@ import Network from "./pages/mynetwork/Network";
 import Jobs from "./pages/jobs/Jobs";
 import Message from "./pages/messages/Message";
 import Profile from "./pages/profile/Profile";
+import NetworkRight from "./pages/mynetwork/right/NetworkRight";
+import UserConnections from "./pages/mynetwork/right/showConnections/UserConnections";
 
 import { checkLocalStorage } from "./app/actions/checkLocalStorage";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,9 +23,9 @@ function App(props) {
   // Check if user is logged in
   const isAuthenticated = useSelector(state=>state.auth.isAuthenticated);
 
-  useEffect(()=>{
+  // useEffect(()=>{
     dispatch(checkLocalStorage());
-  },[dispatch]);
+  // },[dispatch]);
 
   const navigate = useNavigate();
   useEffect(()=>{
@@ -39,13 +41,14 @@ function App(props) {
     
       <div className="app">
         <Routes>
-          {!isAuthenticated && <>
             <Route path="/signin" element={<Login />} />
             <Route path="/signup" element={<Signup />} /> 
-          </>}
           {isAuthenticated && <Route path="/" element={<Header />}>
             <Route index element={<Home />} />
-            <Route path="mynetwork" element={<Network/>}/>
+            <Route path="mynetwork" element={<Network/>}>
+              <Route index element={<NetworkRight/>}/>
+              <Route path="connections" element={<UserConnections/>}/>
+            </Route>
             <Route path="jobs" element={<Jobs/>}/>
             <Route path="message" element={<Message/>}>
               <Route index element={<Message/>}/>

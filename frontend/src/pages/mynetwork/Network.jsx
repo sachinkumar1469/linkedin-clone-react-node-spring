@@ -4,6 +4,8 @@ import React from 'react';
 import "./network.scss";
 import NetworkLeft from './left/NetworkLeft';
 import NetworkRight from './right/NetworkRight';
+// import router outlet from react router dom
+import {Outlet} from "react-router-dom";
 
 function Network() {
   return (
@@ -12,7 +14,8 @@ function Network() {
         <NetworkLeft/>
       </div>
       <div className="network-right">
-        <NetworkRight/>
+        {/* <NetworkRight/> */}
+        <Outlet/>
       </div>
     </div>
   )
