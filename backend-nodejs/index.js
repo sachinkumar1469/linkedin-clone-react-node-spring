@@ -62,7 +62,7 @@ app.use((error,req,res,next)=>{
         const filePath = error.filesPath;
         if(filePath){
             filePath.forEach(file=>{
-                if(file == path.join("uploads","userImages","defaultProfile.png") || file == path.join("uploads","userImages","defaultCover.png")){
+                if(file == path.join("uploads","userImages","defaultProfile.png") || file == path.join("uploads","userImages","defaultCover.png") || file == path.join("uploads","userImages","defaultLogo.png")){
                     console.log("Default image");
                     return;
                 }
