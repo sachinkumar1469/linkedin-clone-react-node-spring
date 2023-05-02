@@ -21,22 +21,21 @@ function App(props) {
   // Redux Dispatch
   const dispatch = useDispatch();
   // Check if user is logged in
-  const isAuthenticated = useSelector(state=>state.auth.isAuthenticated);
+  
+  let localStorageAction = checkLocalStorage();
+  
+  const isAuthenticated = localStorageAction.isAuthenticated;
 
+  dispatch(localStorageAction);
+
+  let authUser = useSelector(state=>state.auth.user);
+
+  // const navigate = useNavigate();
   // useEffect(()=>{
-    dispatch(checkLocalStorage());
-  // },[dispatch]);
-
-  const navigate = useNavigate();
-  useEffect(()=>{
-    console.log("Value of isAuthenticated is:",isAuthenticated);
-    if(!isAuthenticated){
-      navigate('/signin');
-    } else {
-      navigate('/');
-    }
-
-  },[isAuthenticated])
+  //   if(!authUser.isAuthenticated){
+  //     navigate('/signin');
+  //   }
+  // },[authUser])
   return (
     
       <div className="app">

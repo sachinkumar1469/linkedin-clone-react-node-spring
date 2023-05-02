@@ -104,10 +104,16 @@
                 text-decoration: none;
                 width: 80px;
                 height: 100%;
+                color: rgba(0,0,0,0.7);
+                box-sizing: content-box;
                 // border: 1px solid blueviolet;
+                &.active{
+                    border-bottom: 2px solid black;
+                    color: black;
+                }
                 cursor: pointer;
                 svg{
-                    color: black;
+                    
                     width: 1.6rem;
                     height: 1.6rem;
                 }
