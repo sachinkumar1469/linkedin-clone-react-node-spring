@@ -47,6 +47,7 @@ app.use(bodyParser.json());
 // Routes
 app.use("/api",routes);
 
+
 // General Error Handler
 app.use((error,req,res,next)=>{
     if(error){

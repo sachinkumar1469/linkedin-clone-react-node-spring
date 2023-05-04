@@ -46,7 +46,7 @@ router.post("/create",auth,fileUpload.single("logo"),async(req,res,next)=>{
 router.get("/all",auth,async(req,res,next)=>{
     const user = req.user;
     try{
-        const jobs = await jobModel.find({user:user._id}).populate("user","name email").exec();
+        const jobs = await jobModel.find({user:user._id}).populate("user","name email").sort({createdAt:-1});
         res.status(200).json({
             "status":"success",
             "message":"Jobs fetched successfully",
