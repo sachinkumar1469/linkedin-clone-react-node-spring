@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class LinkedinCloneApplication {
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(LinkedinCloneApplication.class, args);
 	}
 
