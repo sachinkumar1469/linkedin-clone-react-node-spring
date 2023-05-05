@@ -1,6 +1,7 @@
 package com.linkedin.controller;
 
 
+import com.linkedin.model.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -13,6 +14,7 @@ public class PostController {
     @RequestMapping("/")
     public String post(){
         System.out.println("Controller called");
+
         return "hello";
     }
 }
