@@ -4,6 +4,7 @@ create table users (
     email VARCHAR(100) NOT NULL UNIQUE,
     phone VARCHAR(20) NOT NULL,
     username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
     description TEXT,
     profileImg VARCHAR(255),
     coverImg VARCHAR(255),

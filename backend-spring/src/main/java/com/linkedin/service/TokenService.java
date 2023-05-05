@@ -1,13 +1,15 @@
-package com.linkedin.config;
+package com.linkedin.service;
 
 import com.linkedin.model.User;
 import com.linkedin.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
+import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
@@ -15,20 +17,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-@Component
-public class JwtUtil {
-    private static final String SECRET_KEY = "mySecretKey";
-
-    private static final Key key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8));
-    private static final long EXPIRATION_TIME = 864_000_000;
-
-
-    UserRepository userRepository;
+@Service
+public class TokenService {
 
     @Autowired
-    public JwtUtil(UserRepository userRepository){
-        this.userRepository = userRepository;
-    }
+    UserRepository userRepository;
+
+    private static final String SECRET_KEY = "mySecretKeykeykeykeykeykeykeykeykey";
+    private static final long EXPIRATION_TIME = 864_000_000;
+    private static final SecretKey key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
 
     public String generateToken(User user){
         Map<String,Object> claims = new HashMap<>();
@@ -42,7 +39,8 @@ public class JwtUtil {
         return Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(new Date())
-                .signWith(key)
+                .setExpiration(new Date(System.currentTimeMillis()+EXPIRATION_TIME))
+                .signWith(key,SignatureAlgorithm.HS256)
                 .compact();
 
     }
@@ -65,5 +63,4 @@ public class JwtUtil {
             return false;
         }
     }
-
 }
