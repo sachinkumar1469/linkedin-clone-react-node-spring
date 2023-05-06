@@ -49,4 +49,18 @@ public class Post {
             inverseJoinColumns = @JoinColumn(name = "hashtag_id")
     )
     private Set<HashTag> hashtagSet = new HashSet<>();
+
+    public void addHashtag(HashTag hashTag){
+        this.hashtagSet.add(hashTag);
+    }
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "id=" + id +
+                ", text='" + text + '\'' +
+                ", image='" + image + '\'' +
+                ", user=" + user +
+                '}';
+    }
 }

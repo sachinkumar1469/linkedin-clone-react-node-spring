@@ -49,11 +49,13 @@ public class TokenService {
         Claims claims = Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build()
-                .parseClaimsJws(token)
+                .parseClaimsJws(token.replace("Bearer ", ""))
                 .getBody();
+//        System.out.println(claims.get("id"));
         Optional<User> user = userRepository.findById((Integer) claims.get("id"));
         return user.orElse(null);
     }
+
 
     public boolean validateToken(String token){
         try{

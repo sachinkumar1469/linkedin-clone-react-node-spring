@@ -28,4 +28,8 @@ public class HashTag {
 
     @ManyToMany(mappedBy = "hashtagSet")
     private Set<Post> postSet = new HashSet<>();
+
+    public void addPost(Post post){
+        this.postSet.add(post);
+    }
 }
