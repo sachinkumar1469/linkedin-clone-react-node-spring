@@ -1,15 +1,15 @@
-import React from 'react'
+import React from 'react';
 
-function RecJobsItem() {
+function RecJobsItem({job}) {
   return (
     <div className="recommendation-jobs-item">
         <div className='jobs-item-left'>
-            <img src="https://media.licdn.com/dms/image/C4D0BAQFxUdcG-60IrQ/company-logo_100_100/0/1678337758128?e=1688601600&v=beta&t=3K6ZmDZ4soJPC0UVKHuWdoeN091Kbvf43OiES6kVGMQ" alt="" />
+            <img src={process.env.REACT_APP_API_URL+job.companyLogo} alt="" />
         </div>
         <div className='jobs-item-center'>
-            <a href="">Jr Nodejs backend developer</a>
-            <h5>Turing</h5>
-            <p>Hauz Khas, New Delhi</p>
+            <a href="">{job.title}</a>
+            <h5>{job.companyName}</h5>
+            <p>{job.location}</p>
         </div>
         <div className='jobs-item-right'>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor" className="mercado-match" width="24" height="24" focusable="false">

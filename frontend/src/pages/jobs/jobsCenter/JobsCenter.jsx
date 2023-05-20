@@ -1,10 +1,24 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
+import axios from 'axios';
 
 // Local imports
 import "./jobsCenter.scss";
 import RecJobsItem from './RecJobsItem';
 
 function JobsCenter() {
+
+  const [jobs, setJobs] = useState([]);
+
+  useEffect(() => {
+    axios.get(process.env.REACT_APP_API_URL+'api/job/all')
+      .then(res => {
+        setJobs(res.data.data);
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }, []);
+
   return (
     <div className='jobs-center-wrapper'>
       <div className="jobs-recent-search">
@@ -24,10 +38,9 @@ function JobsCenter() {
         <h3>Recommended jobs for you</h3>
         <p>Based on your profile and search history</p>
         <div className="recommendation-jobs-list">
-            <RecJobsItem/>
-            <RecJobsItem/>
-            <RecJobsItem/>
-            <RecJobsItem/>
+            {jobs.map((job) => (
+              <RecJobsItem job={job} key={job._id} />
+            ))}
         </div>
       </div>
     </div>

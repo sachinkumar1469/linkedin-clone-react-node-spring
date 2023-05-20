@@ -38,4 +38,22 @@ public class UserPostController {
         Post post = postService.createNewPost(user, newPostRequest);
         return post.toString();
      }
+
+     @DeleteMapping("/delete/{id}")
+     public String deletePost(@PathVariable int id,@RequestHeader("Authorization") String token){
+        User user;
+        try {
+            user = tokenService.extractUserDetails(token);
+        } catch (Exception e){
+            return "Invalid token";
+        }
+        if(user == null){
+            return "Invalid token";
+        }
+        if(postService.deletePost(user,id)){
+            return "Post Deleted";
+        } else {
+            return "Something went wrong";
+        }
+     }
 }

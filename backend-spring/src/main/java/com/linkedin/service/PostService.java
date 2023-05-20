@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 @Service
 public class PostService {
@@ -41,12 +42,28 @@ public class PostService {
             if (hashTag == null) {
                 hashTag = new HashTag();
                 hashTag.setHashtag(hashtagEl);
-                hashTag = hashtagRepository.save(hashTag);   
+//                hashTag = hashtagRepository.save(hashTag);
             }   
             hashTag.addPost(post);
             post.addHashtag(hashTag);
         }
         post = postRepository.save(post);
         return post;
+    }
+
+    public boolean deletePost(User user, int postId){
+        // Check for authorization
+        Optional<Post> optionalPost = postRepository.findById(postId);
+        Post post = optionalPost.orElse(null);
+        if(post == null){
+            System.out.println("Post is null");
+            return false;
+        }
+        System.out.println(post.toString());
+        if(post.getUser().equals(user)){
+            postRepository.delete(post);
+            return true;
+        }
+        return false;
     }
 }
